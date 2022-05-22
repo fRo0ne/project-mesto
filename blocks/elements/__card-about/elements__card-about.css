@@ -1,0 +1,7 @@
+.elements__card-about {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 90%;
+  margin: 25px auto;
+}

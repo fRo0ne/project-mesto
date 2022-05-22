@@ -1,0 +1,13 @@
+.profile__title {
+  margin: 0 0 18px;
+  font: 500 2.1em/1.15 Inter;
+}
+
+
+@media screen and (max-width: 767px) {
+  .profile__title {
+    font: 500 1.35em/1.22 'Inter', 'Arial', sans-serif;
+    margin: 16px 0 14px;
+  }
+
+}

@@ -1,0 +1,8 @@
+.elements__card-info {
+  font: 900 1.2em/1.2 Inter;
+  margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 80%;
+}
