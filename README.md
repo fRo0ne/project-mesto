@@ -23,15 +23,15 @@ $ git clone https://github.com/fRo0ne/project-mesto.git
 
 ### Desktop:
 
-<img src="images/screenshots/1024.JPG" style="background-size: cover" width="524" height="324">
-<img src="images/screenshots/1024-popup.JPG" style="background-size: cover" width="524" height="324">
+<img src="images/screenshots/1024.JPG">
+<img src="images/screenshots/1024-popup.JPG">
 
 ### Tablet:
 
-<img src="images/screenshots/table.jpg" style="background-size: cover" width="324" height="524">
-<img src="images/screenshots/table-popup.jpg" style="background-size: cover" width="324" height="524">
+<img src="images/screenshots/table.JPG">
+<img src="images/screenshots/table-popup.JPG">
 
 ### Mobile:
 
-<img src="images/screenshots/320.JPG" width="324" style="background-size: cover" height="424">
-<img src="images/screenshots/mobile-popup.JPG" style="background-size: cover" width="324" height="424">
+<img src="images/screenshots/320.JPG">
+<img src="images/screenshots/mobile-popup.JPG">
