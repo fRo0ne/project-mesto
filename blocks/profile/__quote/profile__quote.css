@@ -1,11 +1,16 @@
 .profile__quote {
   margin: 0;
   font: .9em/1.2 Inter;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 420px;
 }
 
 @media screen and (max-width: 767px) {
   .profile__quote {
     font: .7em/1.21 'Inter', 'Arial', sans-serif;
+    max-width: 290px;
   }
 
 }
