@@ -1,6 +1,6 @@
 .profile__quote {
   margin: 0;
-  font: .9em/1.2 Inter;
+  font: .9em/1.2 'Inter', 'Arial', sans-serif;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
