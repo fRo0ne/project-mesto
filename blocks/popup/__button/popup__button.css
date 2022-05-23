@@ -20,6 +20,7 @@
   .popup__button {
     height: 46px;
     margin-top: 45px;
+    font: .7em/1.2 'Inter', 'Arial', sans-serif;
   }
 
 }

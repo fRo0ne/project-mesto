@@ -1,4 +1,4 @@
-.elements__card-like {
+.card__like {
   background: url(../../../images/elements/like.svg) center /22px 19px no-repeat;
   width: 22px;
   height: 19px;
@@ -6,7 +6,7 @@
   cursor: pointer;
 }
 
-.elements__card-like:hover {
+.card__like:hover {
   opacity: .5;
   transition: ease-in 0.5s;
 }
