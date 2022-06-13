@@ -28,6 +28,7 @@ const initialCards = [
 
 //modal
 let popup = document.querySelector(".popup");
+let popupImage = document.querySelector(".view-image");
 
 //main content
 let mainContent = document.querySelector(".content");
@@ -62,9 +63,20 @@ function cardSave() {
 }
 
 // удаление карточки со страницы
-function cardDelete() {
-
+function cardDelete(cardElement) {
+  cardElement.remove();
 }
+
+// открываем просмотр фото
+function cardPopupOpen(cardElement) {
+  popupImage.innerHTML = `<figure class="figure">
+  <button class="popup__close" type="button"></button>
+  <img class="view-image__picture" src="${cardElement.src}" alt="${cardElement.alt}">
+  <figcaption class="figure__quote figure__quote_view-image">${cardElement.alt}</figcaption>
+</figure>`;
+  popupImage.classList.toggle("popup_opened");
+}
+
 // добавляем контент на страницу
 function loadCards (initialCards) {
   for (i = 0; i < initialCards.length; i +=1) {
@@ -78,6 +90,7 @@ function loadCards (initialCards) {
     </article>`);
   }
 }
+
 // открываем попап для редактирования профиля
 function popupProfileOpened() {
   let popupValue = popup.querySelectorAll(".popup__item");
@@ -98,6 +111,7 @@ function popupClose() {
   popupValue[0].value = '';
   popupValue[1].value = '';
 }
+
 // открыаем попап для добавления карточек на страницу
 function popupCardOpened() {
   let popupValue = popup.querySelectorAll(".popup__item");
@@ -126,6 +140,9 @@ document.addEventListener('click', function(event) {
   }
   // close popup action
   else if (element.classList.contains('popup__close')) {
+    if(element.parentNode.classList.contains('figure')) {
+      return popupImage.classList.toggle("popup_opened");
+    }
     popupClose();
   }
   // save profile info action
@@ -147,6 +164,11 @@ document.addEventListener('click', function(event) {
   else if (element.classList.contains('card__delete-button')) {
     cardDelete(element.parentNode);
   }
+  // cards view-image action
+  else if (element.classList.contains('card__image')) {
+    cardPopupOpen(element);
+  }
+
 });
 
 

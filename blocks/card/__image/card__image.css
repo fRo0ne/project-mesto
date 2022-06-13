@@ -4,4 +4,10 @@
   width: 100%;
   aspect-ratio: 1;
   border-radius: 10px 10px 0 0;
+  cursor: pointer;
+}
+
+.card__image:hover {
+  transition: ease-in 1.5s;
+  transform: scale(1.1);
 }

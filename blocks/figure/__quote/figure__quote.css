@@ -1,0 +1,8 @@
+.figure__quote {
+  margin: 0;
+  font: .6em/1.25 'Inter', 'Arial', sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 330px;
+}
