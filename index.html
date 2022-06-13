@@ -31,48 +31,8 @@
     </section>
     <section class="elements">
       <h2 class="elements__title-hidden" hidden>Карточки с фотографиями</h2>
-        <article class="card">
-          <img class="card__image" src="images/elements/dumbai.jpg" alt="Думбай">
-          <div class="card__about">
-            <h2 class="card__info">Думбай</h2>
-            <button class="card__like" type="button"></button>
-          </div>
-        </article>
-        <article class="card">
-          <img class="card__image" src="images/elements/alpy.jpg" alt="Альпы">
-          <div class="card__about">
-            <h2 class="card__info">Альпы</h2>
-            <button class="card__like card__like_active" type="button"></button>
-          </div>
-        </article>
-        <article class="card">
-          <img class="card__image" src="images/elements/elbrus.jpg" alt="Эльбрус">
-          <div class="card__about">
-            <h2 class="card__info">Эльбрус</h2>
-            <button class="card__like" type="button"></button>
-          </div>
-        </article>
-        <article class="card">
-          <img class="card__image" src="images/elements/kamchatka.jpg" alt="Камчатка">
-          <div class="card__about">
-            <h2 class="card__info">Острая, Камчатка</h2>
-            <button class="card__like" type="button"></button>
-          </div>
-        </article>
-        <article class="card">
-          <img class="card__image" src="images/elements/karachaevsk.jpg" alt="Карачаевск">
-          <div class="card__about">
-            <h2 class="card__info">Карачаевск</h2>
-            <button class="card__like card__like_active" type="button"></button>
-          </div>
-        </article>
-        <article class="card">
-          <img class="card__image" src="images/elements/sayan.jpg" alt="Саяны">
-          <div class="card__about">
-            <h2 class="card__info">Саяны</h2>
-            <button class="card__like" type="button"></button>
-          </div>
-        </article>
+      <div class="elements__container">
+      </div>
     </section>
   </main>
   <footer class="footer">
@@ -84,8 +44,8 @@
   <button class="popup__close" type="button"></button>
     <form class="popup__form" name="profile-action">
       <h2 class="popup__title">Редактировать профиль</h2>
-        <input class="popup__item" name="name" type="text" placeholder="Имя" value="">
-        <input class="popup__item" name="description" type="text" placeholder="Описание" value="">
+        <input class="popup__item" name="name" type="text" placeholder="Имя" value required>
+        <input class="popup__item" name="description" type="text" placeholder="Описание" value required>
         <button class="popup__button" type="submit">Сохранить</button>
       </form>
   </div>
