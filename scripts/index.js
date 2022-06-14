@@ -52,14 +52,17 @@ function cardSave() {
   let nameMesto = popupValue[0].value;
   let linkMesto = popupValue[1].value;
   elements.insertAdjacentHTML('afterbegin',`<article class="card">
-    <button class="card__delete-button" type="button"></button>
-    <img class="card__image" src="${linkMesto}" alt="${nameMesto}">
-    <div class="card__about">
-      <h2 class="card__info">${nameMesto}</h2>
-      <button class="card__like" type="button"></button>
-    </div>
-    </article>`);
+  <button class="card__delete-button" type="button"></button>
+  <img class="card__image" src="${linkMesto}" alt="${nameMesto}">
+  <div class="card__about">
+    <h2 class="card__info">${nameMesto}</h2>
+    <button class="card__like" type="button"></button>
+  </div>
+  </article>`);
   popup.classList.toggle("popup_opened");
+  popupValue[0].value = '';
+  popupValue[1].value = '';
+
 }
 
 // удаление карточки со страницы
@@ -79,16 +82,16 @@ function cardPopupOpen(cardElement) {
 
 // добавляем контент на страницу
 function loadCards (initialCards) {
-  for (i = 0; i < initialCards.length; i +=1) {
+  initialCards.forEach((card) => {
     elements.insertAdjacentHTML('beforeend',`<article class="card">
     <button class="card__delete-button" type="button"></button>
-    <img class="card__image" src="${initialCards[i].link}" alt="${initialCards[i].name}">
+    <img class="card__image" src="${card.link}" alt="${card.name}">
     <div class="card__about">
-      <h2 class="card__info">${initialCards[i].name}</h2>
+      <h2 class="card__info">${card.name}</h2>
       <button class="card__like" type="button"></button>
     </div>
     </article>`);
-  }
+  });
 }
 
 // открываем попап для редактирования профиля
