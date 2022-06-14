@@ -30,6 +30,18 @@ const initialCards = [
 const popup = document.querySelector(".popup_edit-profile");
 const popupCard = document.querySelector(".popup_add-card");
 const popupImage = document.querySelector(".popup_image");
+const picturePopup = popupImage.querySelector(".popup__picture");
+const figurePopup = popupImage.querySelector(".figure__quote");
+
+//form popup profile
+const savePopupElement = document.querySelector('[name="profile-action"]');
+const nameSaveInput = savePopupElement.querySelector('[name="name"]');
+const aboutSaveInput = savePopupElement.querySelector('[name="description"]');
+//form popup card
+const cardPopupElement = document.querySelector('[name="card-action"]');
+const textCardInput = cardPopupElement.querySelector('[name="text"]');
+const urlCardInput = cardPopupElement.querySelector('[name="url"]');
+
 
 //main content
 const mainContent = document.querySelector(".content");
@@ -41,26 +53,26 @@ const elements = mainContent.querySelector(".elements__container");
 const cardTemplate = document.querySelector('#cards-element').content;
 
 // сохранение информации в профиле
-function saveProfile() {
-  const popupValue = popup.querySelectorAll(".popup__item");
-  profileName.textContent = popupValue[0].value;
-  profileAbout.textContent = popupValue[1].value;
+function saveProfile(evt) {
+  evt.preventDefault();
+  profileName.textContent = nameSaveInput.value;
+  profileAbout.textContent = aboutSaveInput.value;
   popup.classList.toggle("popup_opened");
 }
 
 // добавление карточки на страницу
-function saveCard() {
-  const popupValue = popupCard.querySelectorAll(".popup__item");
-  const nameMesto = popupValue[0].value;
-  const linkMesto = popupValue[1].value;
+function saveCard(evt) {
+  evt.preventDefault();
+  const nameMesto = textCardInput.value;
+  const linkMesto = urlCardInput.value;
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   cardElement.querySelector('.card__image').src = linkMesto;
   cardElement.querySelector('.card__image').alt = nameMesto;
   cardElement.querySelector('.card__info').textContent = nameMesto;
   elements.prepend(cardElement);
   popupCard.classList.toggle("popup_opened");
-  popupValue[0].value = '';
-  popupValue[1].value = '';
+  textCardInput.value = '';
+  urlCardInput.value = '';
 
 }
 
@@ -71,8 +83,6 @@ function deleteCard(cardElement) {
 
 // открываем просмотр фото
 function openedCardPopup(cardElement) {
-  const picturePopup = popupImage.querySelector(".popup__picture");
-  const figurePopup = popupImage.querySelector(".figure__quote");
   picturePopup.src = cardElement.src;
   picturePopup.alt = cardElement.alt;
   figurePopup.textContent = cardElement.alt;
@@ -92,24 +102,23 @@ function loadCards (initialCards) {
 
 // открываем попап для редактирования профиля
 function openedPopupProfile() {
-  const popupValue = popup.querySelectorAll(".popup__item");
-  popupValue[0].value = profileName.textContent;
-  popupValue[1].value = profileAbout.textContent;
+  nameSaveInput.value = profileName.textContent;
+  aboutSaveInput.value = profileAbout.textContent;
   popup.classList.toggle("popup_opened");
 }
 
 // закрываем попап, без привязки где был вызван
 function closePopup(popupElement) {
   const popupParent = popupElement.parentNode;
-  if(popupParent.classList.contains('figure')) {
+  if (popupParent.classList.contains('figure')) {
     return popupImage.classList.toggle("popup_opened");
   }
-  if(popupParent.classList.contains('popup__container')) {
-    const popupValue = popupParent.parentNode.querySelectorAll(".popup__item");
-    popupValue[0].value = '';
-    popupValue[1].value = '';
-    return popupParent.parentNode.classList.contains('popup_edit-profile') ? popup.classList.toggle("popup_opened") : popupCard.classList.toggle("popup_opened");
+  if (popupParent.classList.contains('popup__container') && popupParent.parentNode.classList.contains('popup_edit-profile')) {
+    return popup.classList.toggle("popup_opened");
   }
+  textCardInput.value = '';
+  urlCardInput.value = '';
+  return popupCard.classList.toggle("popup_opened");
 }
 
 // открыаем попап для добавления карточек на страницу
@@ -135,19 +144,9 @@ document.addEventListener('click', function(event) {
   else if (element.classList.contains('popup__close')) {
     closePopup(element);
   }
-  // save profile info action
-  else if (element.classList.contains('popup__button')) {
-    event.preventDefault();
-    saveProfile();
-  }
   // add card action
   else if (element.classList.contains('profile__add-button')) {
     openedCardActionPopup();
-  }
-  // save card action
-  else if (element.classList.contains('popup__button-cards')) {
-    event.preventDefault();
-    saveCard();
   }
   // delete card action
   else if (element.classList.contains('card__delete-button')) {
@@ -160,4 +159,21 @@ document.addEventListener('click', function(event) {
 
 });
 
+savePopupElement.addEventListener('submit', saveProfile);
+cardPopupElement.addEventListener('submit', saveCard);
 
+
+
+  // // save card action
+  // else if (element.classList.contains('popup__button-cards')) {
+  //   event.preventDefault();
+  //   saveCard();
+  // }
+
+
+
+  // // save profile info action
+  // else if (element.classList.contains('popup__button')) {
+  //   event.preventDefault();
+  //   saveProfile();
+  // }
