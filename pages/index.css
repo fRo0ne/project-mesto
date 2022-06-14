@@ -33,9 +33,6 @@
 /* footer */
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
-/* view-image */
-@import url(../blocks/view-image/view-image.css);
-@import url(../blocks/view-image/__picture/view-image__picture.css);
 /* popup */
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/__container/popup__container.css);
@@ -46,4 +43,6 @@
 @import url(../blocks/popup/__button/popup__button.css);
 @import url(../blocks/popup/__button-cards/popup__button-cards.css);
 @import url(../blocks/popup/__close/popup__close.css);
+@import url(../blocks/popup/__picture/popup__picture.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/popup/_image/popup_image.css);
