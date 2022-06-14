@@ -161,19 +161,3 @@ document.addEventListener('click', function(event) {
 
 savePopupElement.addEventListener('submit', saveProfile);
 cardPopupElement.addEventListener('submit', saveCard);
-
-
-
-  // // save card action
-  // else if (element.classList.contains('popup__button-cards')) {
-  //   event.preventDefault();
-  //   saveCard();
-  // }
-
-
-
-  // // save profile info action
-  // else if (element.classList.contains('popup__button')) {
-  //   event.preventDefault();
-  //   saveProfile();
-  // }
