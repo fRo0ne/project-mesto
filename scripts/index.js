@@ -27,17 +27,17 @@ const initialCards = [
   ];
 
 //modal
-let popup = document.querySelector(".popup");
-let popupImage = document.querySelector(".view-image");
+const popup = document.querySelector(".popup");
+const popupImage = document.querySelector(".view-image");
 
 //main content
-let mainContent = document.querySelector(".content");
-let profileName = mainContent.querySelector(".profile__title");
-let profileAbout = mainContent.querySelector(".profile__quote");
-let elements = mainContent.querySelector(".elements__container");
+const mainContent = document.querySelector(".content");
+const profileName = mainContent.querySelector(".profile__title");
+const profileAbout = mainContent.querySelector(".profile__quote");
+const elements = mainContent.querySelector(".elements__container");
 
 // сохранение информации в профиле
-function profileSave() {
+function saveProfile() {
   let popupValue = popup.querySelectorAll(".popup__item");
   profileName.textContent = popupValue[0].value;
   profileAbout.textContent = popupValue[1].value;
@@ -47,10 +47,10 @@ function profileSave() {
 }
 
 // добавление карточки на страницу
-function cardSave() {
-  let popupValue = popup.querySelectorAll(".popup__item");
-  let nameMesto = popupValue[0].value;
-  let linkMesto = popupValue[1].value;
+function saveCard() {
+  const popupValue = popup.querySelectorAll(".popup__item");
+  const nameMesto = popupValue[0].value;
+  const linkMesto = popupValue[1].value;
   elements.insertAdjacentHTML('afterbegin',`<article class="card">
   <button class="card__delete-button" type="button"></button>
   <img class="card__image" src="${linkMesto}" alt="${nameMesto}">
@@ -66,12 +66,12 @@ function cardSave() {
 }
 
 // удаление карточки со страницы
-function cardDelete(cardElement) {
+function deleteCard(cardElement) {
   cardElement.remove();
 }
 
 // открываем просмотр фото
-function cardPopupOpen(cardElement) {
+function openedCardPopup(cardElement) {
   popupImage.innerHTML = `<figure class="figure">
   <button class="popup__close" type="button"></button>
   <img class="view-image__picture" src="${cardElement.src}" alt="${cardElement.alt}">
@@ -95,7 +95,7 @@ function loadCards (initialCards) {
 }
 
 // открываем попап для редактирования профиля
-function popupProfileOpened() {
+function openedPopupProfile() {
   let popupValue = popup.querySelectorAll(".popup__item");
   popupValue[0].value = profileName.textContent;
   popupValue[1].value = profileAbout.textContent;
@@ -103,7 +103,7 @@ function popupProfileOpened() {
 }
 
 // закрываем попап, без привязки где был вызван
-function popupClose() {
+function closePopup() {
   let popupValue = popup.querySelectorAll(".popup__item");
   if (!popup.querySelector(".popup__button")) {
     popup.querySelector(".popup__button-cards").classList.replace("popup__button-cards", "popup__button");
@@ -116,7 +116,7 @@ function popupClose() {
 }
 
 // открыаем попап для добавления карточек на страницу
-function popupCardOpened() {
+function openedCardActionPopup() {
   let popupValue = popup.querySelectorAll(".popup__item");
   let popupTitle = popup.querySelector(".popup__title");
   let popupButton = popup.querySelector(".popup__button");
@@ -132,44 +132,44 @@ document.addEventListener("DOMContentLoaded", loadCards(initialCards));
 
 // delegation
 document.addEventListener('click', function(event) {
-  let element = event.target;
+  const element = event.target;
   // like action
   if(element.classList.contains('card__like')) {
     element.classList.toggle("card__like_active");
   }
   // edit action
   else if (element.classList.contains('profile__edit-button')) {
-    popupProfileOpened();
+    openedPopupProfile();
   }
   // close popup action
   else if (element.classList.contains('popup__close')) {
     if(element.parentNode.classList.contains('figure')) {
       return popupImage.classList.toggle("popup_opened");
     }
-    popupClose();
+    closePopup();
   }
   // save profile info action
   else if (element.classList.contains('popup__button')) {
     event.preventDefault();
-    profileSave();
+    saveProfile();
   }
   // add card action
   else if (element.classList.contains('profile__add-button')) {
-    popupCardOpened();
+    openedCardActionPopup();
   }
   // save card action
   else if (element.classList.contains('popup__button-cards')) {
     event.preventDefault();
-    cardSave();
+    saveCard();
     element.classList.replace("popup__button-cards", "popup__button");
   }
   // delete card action
   else if (element.classList.contains('card__delete-button')) {
-    cardDelete(element.parentNode);
+    deleteCard(element.parentNode);
   }
   // cards view-image action
   else if (element.classList.contains('card__image')) {
-    cardPopupOpen(element);
+    openedCardPopup(element);
   }
 
 });
