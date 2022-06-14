@@ -71,7 +71,7 @@ function createCard(link,name) {
   cardElement.querySelector('.card__image').alt = name;
   cardElement.querySelector('.card__info').textContent = name;
   cardElement.querySelector('.card__delete-button').addEventListener('click', function (evt) {
-    deleteCard(evt.target.parentNode);
+    deleteCard(evt.target.closest('.card'));
   });
   cardElement.querySelector('.card__like').addEventListener('click', function (evt) {
     evt.target.classList.toggle("card__like_active");
