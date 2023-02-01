@@ -7,7 +7,6 @@
   <meta name="description" content="Сервис Mesto">
   <meta name="keywords" content="Интерактивный сайт, учеба">
   <meta name="author" content="Danya Pavlov">
-  <link rel="stylesheet" href="pages/index.css">
   <title>«Mesto»</title>
 </head>
 <body class="root">
@@ -18,7 +17,7 @@
   <main class="content">
     <section class="profile">
       <div class="profile__container">
-        <img class="profile__image" src="images/profile/profile.jpg" alt="Аватарка профиля">
+        <div class="profile__image"></div>
         <div class="profile__info">
           <div class="profile__edit-action">
             <h1 class="profile__title">Danya Pavlov</h1>
@@ -44,8 +43,10 @@
   <button class="popup__close" type="button"></button>
     <form class="popup__form" name="profile-action">
       <h2 class="popup__title">Редактировать профиль</h2>
-        <input class="popup__item" name="name" type="text" placeholder="Имя" value required>
-        <input class="popup__item" name="description" type="text" placeholder="Описание" value required>
+        <input class="popup__item" name="name" type="text" placeholder="Имя" placeholder="Имя" minlength="2" maxlength="40" pattern="^[-а-яА-ЯёЁa-zA-z\s]+$" data-invalid-message="Поле может содержать латинские буквы, кириллические буквы, знаки дефиса и пробелы" value required>
+        <div class="popup__item-notify popup__item-name"></div>
+        <input class="popup__item" name="description" type="text" placeholder="Профессия" minlength="2" maxlength="400" required>
+        <div class="popup__item-notify popup__item-description"></div>
         <button class="popup__button" type="submit">Сохранить</button>
       </form>
   </div>
@@ -55,9 +56,11 @@
   <button class="popup__close" type="button"></button>
     <form class="popup__form" name="card-action">
       <h2 class="popup__title">Новое место</h2>
-        <input class="popup__item" name="text" type="text" placeholder="Название" required>
+        <input class="popup__item" name="text" type="text" placeholder="Название" minlength="2" maxlength="30" pattern="^[-а-яА-ЯёЁa-zA-z\s]+$"  data-invalid-message="Поле может содержать латинские буквы, кириллические буквы, знаки дефиса и пробелы" required>
+        <div class="popup__item-notify popup__item-text"></div>
         <input class="popup__item" name="url" type="url" placeholder="Ссылка на картинку" required>
-        <button class="popup__button-cards" type="submit">Сохранить</button>
+        <div class="popup__item-notify popup__item-url"></div>
+        <button class="popup__button" type="submit">Сохранить</button>
       </form>
   </div>
 </div>
@@ -68,16 +71,31 @@
     <figcaption class="figure__quote figure__quote_view-image"></figcaption>
   </figure>
 </div>
+<!-- Попап аватар -->
+<div class="popup popup_avatar-edit">
+  <div class="popup__container">
+    <button class="popup__close" type="button"></button>
+      <form class="popup__form" name="card-action">
+        <h2 class="popup__title">Обновить аватар</h2>
+          <input class="popup__item" name="url" type="url" placeholder="Ссылка на картинку" required>
+          <div class="popup__item-notify popup__item-url"></div>
+          <button class="popup__button" type="submit">Сохранить</button>
+        </form>
+    </div>  
+
+</div>
 <template id="cards-element">
   <article class="card">
     <button class="card__delete-button" type="button"></button>
     <img class="card__image" src="#" alt="">
     <div class="card__about">
       <h2 class="card__info"></h2>
-      <button class="card__like" type="button"></button>
+      <div class="card__like-container">
+        <button class="card__like" type="button"></button>
+        <div class="card__like-count"></div>
+      </div>
     </div>
     </article>
 </template>
-<script src="scripts/index.js"></script>
 </body>
 </html>

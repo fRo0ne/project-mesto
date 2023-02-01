@@ -1,3 +1,7 @@
+import { enableValidation } from '../src/components/validate.js';
+import { config } from '../src/components/constants.js';
+
+enableValidation(config);
 // cards
 const initialCards = [
   {

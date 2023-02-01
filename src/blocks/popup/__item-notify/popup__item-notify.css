@@ -1,0 +1,12 @@
+.popup__item-notify {
+    visibility: hidden;
+    color: rgba(255, 0, 0, 1);
+    font-size: 12px;
+    margin-bottom: 13px;
+}
+
+@media screen and (max-width: 767px) {
+    .popup__item-notify {
+        margin-left: 20px;
+    }
+}
