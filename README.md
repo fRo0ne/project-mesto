@@ -3,6 +3,7 @@
 ### Установка
 ``` bash
 $ git clone https://github.com/fRo0ne/project-mesto.git
+$ npm run build
 ```
 
 ### Стэк
@@ -12,7 +13,7 @@ $ git clone https://github.com/fRo0ne/project-mesto.git
 
 **Описание**
 
-Сервис Mesto, продолжение изначального проекта. Реализация на JavaScript. Фронт часть. Возможность редактирования информации из профиля и добавление/удаление карточек на странице.
+Сервис Mesto, продолжение изначального проекта. Реализация на JavaScript. Фронт часть. Возможность редактирования информации из профиля и добавление/удаление карточек на странице. Полное взаимодействие с сервером, валидация введенных данных.
 
 **Линки**
 
@@ -21,5 +22,5 @@ $ git clone https://github.com/fRo0ne/project-mesto.git
 
 ### Скриншот десктоп версии:
 
-<img src="images/screenshots/1024.JPG">
-<img src="images/screenshots/1024-popup.JPG">
+<img src="src/images/screenshots/1024.JPG">
+<img src="src/images/screenshots/1024-popup.JPG">
