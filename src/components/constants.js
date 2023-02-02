@@ -23,10 +23,6 @@ export const settingsApi = {
   }
 }
 
-export let userId;
-export let isOwner = false;
-export let likeOwner = false;
-
 // cards
 export const initialCards = [
   {

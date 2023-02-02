@@ -9,6 +9,10 @@ import { createCard } from './cards.js';
 import { renderProfile,getCards,submitProfileForm,changeAvatar,submitCardForm } from './api.js';
 import '../index.css';
 
+export let userId;
+export let isOwner = false;
+export let likeOwner = false;
+
 // delegation profile
 profileContainer.addEventListener('click', function (evt) {
     const element = evt.target;

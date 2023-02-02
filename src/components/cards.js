@@ -1,5 +1,5 @@
-import { cardTemplate,isOwner,likeOwner } from "./constants.js";
-import { openedCardPopup } from "./index.js";
+import { cardTemplate } from "./constants.js";
+import { openedCardPopup,isOwner,likeOwner  } from "./index.js";
 import { deleteCard,deleteLike,addLike } from "./api.js";
 
 // создание карточек

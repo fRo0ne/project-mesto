@@ -13,9 +13,7 @@ export function deleteCard(cardId) {
         method: 'DELETE',
         headers: settingsApi.headers,
     })
-        .catch((err) => {
-            console.log(err);
-        })
+    
 }
 
 export function addLike(cardId) {
@@ -23,9 +21,7 @@ export function addLike(cardId) {
         method: 'PUT',
         headers: settingsApi.headers,
     })
-        .catch((err) => {
-            console.log(err);
-        })
+    
 }
 
 export function deleteLike(cardId) {
@@ -33,18 +29,14 @@ export function deleteLike(cardId) {
         method: 'DELETE',
         headers: settingsApi.headers,
     })
-        .catch((err) => {
-            console.log(err);
-        })
+    
 }
 
 export function getCards() {
     return request(`${settingsApi.baseUrl}/cards`, {
         headers: settingsApi.headers,
     })
-        .catch((err) => {
-            console.log(err);
-        })
+    
 }
 
 
@@ -57,9 +49,7 @@ export function submitProfileForm(nameInput, jobInput) {
             about: jobInput.value
         })
     })
-        .catch((err) => {
-            console.log(err);
-        })
+    
 }
 
 
@@ -72,9 +62,7 @@ export function submitCardForm(nameCardInput, imageInput) {
             link: imageInput.value
         })
     })
-        .catch((err) => {
-            console.log(err);
-        })
+    
 }
 
 export function changeAvatar(avatarLink) {
@@ -85,16 +73,12 @@ export function changeAvatar(avatarLink) {
             avatar: avatarLink.value,
         })
     })
-        .catch((err) => {
-            console.log(err);
-        })
+    
 }
 
 export function renderProfile() {
     return request(`${settingsApi.baseUrl}/users/me`, {
         headers: settingsApi.headers,
     })
-        .catch((err) => {
-            console.log(err);
-        })
+    
 }
