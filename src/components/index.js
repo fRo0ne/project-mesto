@@ -2,7 +2,7 @@ import { enableValidation } from './validate.js';
 import { profileName,profileAbout,nameSaveInput,aboutSaveInput,popupProfile } from "./constants.js";
 import { picturePopup,figurePopup,popupImage,popupCard,popupAvatarProfile,profileAvatar } from "./constants.js";
 import { config,elements,textCardInput,urlCardInput,cardPopupAvatarElement,urlAvatarInput } from './constants.js';
-import { profileContainer,popups,savePopupElement,cardPopupElement,userId,isOwner,likeOwner } from './constants.js';
+import { profileContainer,popups,savePopupElement,cardPopupElement } from './constants.js';
 import { openPopup, closePopup } from './modal.js';
 import { handleSubmit } from './util.js';
 import { createCard } from './cards.js';
