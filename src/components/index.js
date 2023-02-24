@@ -1,17 +1,21 @@
 import { enableValidation } from './validate.js';
 import { profileName,profileAbout,nameSaveInput,aboutSaveInput,popupProfile } from "./constants.js";
 import { picturePopup,figurePopup,popupImage,popupCard,popupAvatarProfile,profileAvatar } from "./constants.js";
-import { config,elements,textCardInput,urlCardInput,cardPopupAvatarElement,urlAvatarInput } from './constants.js';
+import { settingsApi,config,elements,textCardInput,urlCardInput,cardPopupAvatarElement,urlAvatarInput } from './constants.js';
 import { profileContainer,popups,savePopupElement,cardPopupElement } from './constants.js';
 import { openPopup, closePopup } from './modal.js';
 import { handleSubmit } from './util.js';
 import { createCard } from './cards.js';
-import { renderProfile,getCards,submitProfileForm,changeAvatar,submitCardForm } from './api.js';
+import Api from './api.js';
 import '../index.css';
 
 export let userId;
 export let isOwner = false;
 export let likeOwner = false;
+
+
+
+export const defaultApi = new Api( settingsApi );
 
 // delegation profile
 profileContainer.addEventListener('click', function (evt) {
@@ -57,7 +61,7 @@ export function loadCards(initialCards) {
 // добавление карточки на страницу
 export function saveCard(evt) {
     function createRequest() {
-        return submitCardForm(textCardInput, urlCardInput).then(data => {
+        return defaultApi.submitCardForm(textCardInput, urlCardInput).then(data => {
             isOwner = true;
             const nameCard = textCardInput.value;
             const linkCardImage = urlCardInput.value;
@@ -72,7 +76,7 @@ export function saveCard(evt) {
 // сохранение информации в профиле
 export function saveProfile(evt) {
     function createRequest() {
-        return submitProfileForm(nameSaveInput,aboutSaveInput).then(data => {
+        return defaultApi.submitProfileForm(nameSaveInput,aboutSaveInput).then(data => {
             profileName.textContent = data.name;
             profileAbout.textContent = data.about;
             closePopup(popupProfile);
@@ -85,7 +89,7 @@ export function saveProfile(evt) {
 // сохранение информации в профиле
 export function saveProfileAvatar(evt) {
     function createRequest() {
-        return changeAvatar(urlAvatarInput).then(data => {
+        return defaultApi.changeAvatar(urlAvatarInput).then(data => {
             profileAvatar.style.backgroundImage = `url(${data.avatar}`;
             closePopup(popupAvatarProfile);
         });
@@ -123,7 +127,7 @@ savePopupElement.addEventListener('submit', saveProfile);
 cardPopupElement.addEventListener('submit', saveCard);
 cardPopupAvatarElement.addEventListener('submit', saveProfileAvatar);
 
-Promise.all([renderProfile(), getCards()])
+Promise.all([defaultApi.renderProfile(), defaultApi.getCards()])
   .then(([userData, cards]) => {
     profileAvatar.style.backgroundImage = `url(${userData.avatar}`;
     profileName.textContent = userData.name;

@@ -1,6 +1,5 @@
 import { cardTemplate } from "./constants.js";
-import { openedCardPopup,isOwner,likeOwner  } from "./index.js";
-import { deleteCard,deleteLike,addLike } from "./api.js";
+import { openedCardPopup,isOwner,likeOwner,defaultApi  } from "./index.js";
 
 // создание карточек
 export function createCard(link, name, countLikes = 0, cardId) {
@@ -17,7 +16,7 @@ export function createCard(link, name, countLikes = 0, cardId) {
     cardLikeContent.textContent = countLikes;
     cardElement.querySelector('.card__info').textContent = name;
     cardDeleteButton.addEventListener('click', function (evt) {
-        deleteCard(cardId).then(res => {
+        defaultApi.deleteCard(cardId).then(res => {
             if(res) deleteCardFromPage(evt.target.closest('.card'));
         }).catch(err => console.log(err));
     });
@@ -38,7 +37,7 @@ export function deleteCardFromPage(cardElement) {
 // action на лайки карточки
 export function cardLikeAction(cardLikeButton, cardLikeContent, card) {
     if(cardLikeButton.classList.contains('card__like_active')) {
-        deleteLike(card.id).then(res => {
+        defaultApi.deleteLike(card.id).then(res => {
             if(res) {
                 cardLikeButton.classList.remove('card__like_active');
                 cardLikeContent.textContent = res.likes.length;
@@ -46,7 +45,7 @@ export function cardLikeAction(cardLikeButton, cardLikeContent, card) {
         }).catch(err => console.log(err));
         return;
     }
-    addLike(card.id).then(res => {
+    defaultApi.addLike(card.id).then(res => {
         if(res) {
         cardLikeButton.classList.add('card__like_active');
         cardLikeContent.textContent = res.likes.length;

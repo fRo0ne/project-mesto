@@ -1,49 +1,54 @@
-import { settingsApi } from "./constants";
+export default class Api {
 
-function getResponse(res) {
+constructor({ headers, baseUrl }) {
+this._headers = headers;
+this._baseUrl = baseUrl;
+    }
+
+_getResponse(res) {
     return res.ok ? res.json() : Promise.reject(res);
 }
 
-function request(url, options) {
-    return fetch(url, options).then(getResponse);
+_request(url, options) {
+    return fetch(url, options).then(this._getResponse);
 }
 
-export function deleteCard(cardId) {
-    return request(`${settingsApi.baseUrl}/cards/${cardId}`, {
+deleteCard(cardId) {
+    return this._request(`${this._baseUrl}/cards/${cardId}`, {
         method: 'DELETE',
-        headers: settingsApi.headers,
+        headers: this._headers,
     })
     
 }
 
-export function addLike(cardId) {
-    return request(`${settingsApi.baseUrl}/cards/likes/${cardId}`, {
+addLike(cardId) {
+    return this._request(`${this._baseUrl}/cards/likes/${cardId}`, {
         method: 'PUT',
-        headers: settingsApi.headers,
+        headers: this._headers,
     })
     
 }
 
-export function deleteLike(cardId) {
-    return request(`${settingsApi.baseUrl}/cards/likes/${cardId}`, {
+deleteLike(cardId) {
+    return this._request(`${this._baseUrl}/cards/likes/${cardId}`, {
         method: 'DELETE',
-        headers: settingsApi.headers,
+        headers: this._headers,
     })
     
 }
 
-export function getCards() {
-    return request(`${settingsApi.baseUrl}/cards`, {
-        headers: settingsApi.headers,
+getCards() {
+    return this._request(`${this._baseUrl}/cards`, {
+        headers: this._headers,
     })
     
 }
 
 
-export function submitProfileForm(nameInput, jobInput) {
-    return request(`${settingsApi.baseUrl}/users/me`, {
+submitProfileForm(nameInput, jobInput) {
+    return this._request(`${this._baseUrl}/users/me`, {
         method: 'PATCH',
-        headers: settingsApi.headers,
+        headers: this._headers,
         body: JSON.stringify({
             name: nameInput.value,
             about: jobInput.value
@@ -53,10 +58,10 @@ export function submitProfileForm(nameInput, jobInput) {
 }
 
 
-export function submitCardForm(nameCardInput, imageInput) {
-    return request(`${settingsApi.baseUrl}/cards`, {
+submitCardForm(nameCardInput, imageInput) {
+    return this._request(`${this._baseUrl}/cards`, {
         method: 'POST',
-        headers: settingsApi.headers,
+        headers: this._headers,
         body: JSON.stringify({
             name: nameCardInput.value,
             link: imageInput.value
@@ -65,10 +70,10 @@ export function submitCardForm(nameCardInput, imageInput) {
     
 }
 
-export function changeAvatar(avatarLink) {
-    return request(`${settingsApi.baseUrl}/users/me/avatar`, {
+changeAvatar(avatarLink) {
+    return this._request(`${this._baseUrl}/users/me/avatar`, {
         method: 'PATCH',
-        headers: settingsApi.headers,
+        headers: this._headers,
         body: JSON.stringify({
             avatar: avatarLink.value,
         })
@@ -76,9 +81,11 @@ export function changeAvatar(avatarLink) {
     
 }
 
-export function renderProfile() {
-    return request(`${settingsApi.baseUrl}/users/me`, {
-        headers: settingsApi.headers,
+renderProfile() {
+    return this._request(`${this._baseUrl}/users/me`, {
+        headers: this._headers,
     })
     
+}
+
 }
