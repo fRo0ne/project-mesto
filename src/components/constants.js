@@ -51,6 +51,8 @@ export const initialCards = [
   }
 ];
 
+//form 
+export const forms = document.querySelectorAll(config.modalForms);
 //modal
 export const popups = document.querySelectorAll('.popup');
 export const popupProfile = document.querySelector(".popup_edit-profile");

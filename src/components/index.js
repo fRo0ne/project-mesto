@@ -1,19 +1,18 @@
-import { enableValidation } from './validate.js';
-import { profileName,profileAbout,nameSaveInput,aboutSaveInput,popupProfile } from "./constants.js";
+import { profileName,profileAbout,nameSaveInput,aboutSaveInput,popupProfile,forms } from "./constants.js";
 import { picturePopup,figurePopup,popupImage,popupCard,popupAvatarProfile,profileAvatar } from "./constants.js";
 import { settingsApi,config,elements,textCardInput,urlCardInput,cardPopupAvatarElement,urlAvatarInput } from './constants.js';
-import { profileContainer,popups,savePopupElement,cardPopupElement } from './constants.js';
-import { openPopup, closePopup } from './modal.js';
+import { profileContainer,popups,savePopupElement,cardPopupElement,cardTemplate } from './constants.js';
 import { handleSubmit } from './util.js';
-import { createCard } from './cards.js';
-import Api from './api.js';
+import Api from './Api.js';
+import Popup from './Popup.js';
+import UserInfo from './UserInfo.js';
+import FormValidator from './FormValidator.js';
+import Cards from './Cards.js';
 import '../index.css';
 
 export let userId;
 export let isOwner = false;
 export let likeOwner = false;
-
-
 
 export const defaultApi = new Api( settingsApi );
 
@@ -38,10 +37,10 @@ profileContainer.addEventListener('click', function (evt) {
 popups.forEach((popup) => {
   popup.addEventListener('click', (evt) => {
      if (evt.target.classList.contains('popup__close')) {
-        closePopup(popup);
+        new Popup(popup).closePopup();
       }
     if (evt.target.classList.contains('popup')) {
-        closePopup(popup);
+        new Popup(popup).closePopup();
     }
   });
 });
@@ -49,12 +48,14 @@ popups.forEach((popup) => {
 // добавляем контент на страницу
 export function loadCards(initialCards) {
     initialCards.forEach((card) => {
+        card.countLikes = card.likes.length;
         likeOwner = false;
         isOwner = userId === card.owner._id;
         card.likes.forEach(el => {
             if(el._id === userId) likeOwner = true;
         })
-        elements.append(createCard(card.link, card.name, card.likes.length, card._id));
+        const cards = new Cards(card,cardTemplate, isOwner, likeOwner, defaultApi, openedCardPopup);
+        elements.append(cards.createCard());
     });
 }
 
@@ -65,8 +66,15 @@ export function saveCard(evt) {
             isOwner = true;
             const nameCard = textCardInput.value;
             const linkCardImage = urlCardInput.value;
-            elements.prepend(createCard(linkCardImage, nameCard, 0, data._id));
-            closePopup(popupCard);
+            const card = ({
+                link: linkCardImage,
+                name: nameCard,
+                countLikes: 0,
+                _id: data._id
+            });
+            const cards = new Cards(card,cardTemplate, isOwner, likeOwner, defaultApi, openedCardPopup);
+            elements.prepend(cards.createCard());
+            new Popup(popupCard).closePopup();
         });
     }
     handleSubmit(createRequest, evt);
@@ -79,7 +87,7 @@ export function saveProfile(evt) {
         return defaultApi.submitProfileForm(nameSaveInput,aboutSaveInput).then(data => {
             profileName.textContent = data.name;
             profileAbout.textContent = data.about;
-            closePopup(popupProfile);
+            new Popup(popupProfile).closePopup();
         });
     }
     handleSubmit(createRequest,evt);
@@ -91,7 +99,7 @@ export function saveProfileAvatar(evt) {
     function createRequest() {
         return defaultApi.changeAvatar(urlAvatarInput).then(data => {
             profileAvatar.style.backgroundImage = `url(${data.avatar}`;
-            closePopup(popupAvatarProfile);
+            new Popup(popupAvatarProfile).closePopup();
         });
     }
     handleSubmit(createRequest, evt);
@@ -99,27 +107,27 @@ export function saveProfileAvatar(evt) {
 
 // открываем просмотр фото
 export function openedCardPopup(cardElement) {
-    picturePopup.src = cardElement.src;
-    picturePopup.alt = cardElement.alt;
-    figurePopup.textContent = cardElement.alt;
-    openPopup(popupImage);
+    picturePopup.src = cardElement.target.src;
+    picturePopup.alt = cardElement.target.alt;
+    figurePopup.textContent = cardElement.target.alt;
+    new Popup(popupImage).openPopup();
 }
 
 // открываем попап для редактирования профиля
 export function openedPopupProfile() {
-    nameSaveInput.value = profileName.textContent;
-    aboutSaveInput.value = profileAbout.textContent;
-    openPopup(popupProfile);
+    nameSaveInput.value = new UserInfo( {profileAvatar, profileName, profileAbout} ).getUserInfo().name;
+    aboutSaveInput.value = new UserInfo( {profileAvatar, profileName, profileAbout} ).getUserInfo().about;
+    new Popup(popupProfile).openPopup();
 }
 
 // открыаем попап для добавления карточек на страницу
 export function openedCardActionPopup() {
-    openPopup(popupCard);
+    new Popup(popupCard).openPopup();
 }
 
 // открыаем попап для добавления карточек на страницу
 export function openedAvatarPopupProfle() {
-    openPopup(popupAvatarProfile);
+    new Popup(popupAvatarProfile).openPopup();
 }
 
 // эвент форм, сохранение профиля и добавление карточек
@@ -129,9 +137,7 @@ cardPopupAvatarElement.addEventListener('submit', saveProfileAvatar);
 
 Promise.all([defaultApi.renderProfile(), defaultApi.getCards()])
   .then(([userData, cards]) => {
-    profileAvatar.style.backgroundImage = `url(${userData.avatar}`;
-    profileName.textContent = userData.name;
-    profileAbout.textContent = userData.about;
+    new UserInfo( {profileAvatar, profileName, profileAbout} ).setUserInfo(userData);
     userId = userData._id;
     loadCards(cards);
   })
@@ -139,5 +145,16 @@ Promise.all([defaultApi.renderProfile(), defaultApi.getCards()])
     console.log(err);
   });
 
-enableValidation(config);
+
+
+
+function enableValidation() {
+    const elementsForm = Array.from(forms);
+    elementsForm.forEach((el) => {
+        new FormValidator(config).setEventListeners(el);
+    });
+};
+
+
+enableValidation();
 
