@@ -61,21 +61,20 @@ export function loadCards(initialCards) {
 
 // добавление карточки на страницу
 export function saveCard(evt) {
-    function createRequest() {
-        return defaultApi.submitCardForm(textCardInput, urlCardInput).then(data => {
-            isOwner = true;
-            const nameCard = textCardInput.value;
-            const linkCardImage = urlCardInput.value;
-            const card = ({
-                link: linkCardImage,
-                name: nameCard,
-                countLikes: 0,
-                _id: data._id
-            });
-            const cards = new Cards(card,cardTemplate, isOwner, likeOwner, defaultApi, openedCardPopup);
-            elements.prepend(cards.createCard());
-            new Popup(popupCard).closePopup();
+    async function createRequest() {
+        const data = await defaultApi.submitCardForm(textCardInput, urlCardInput);
+        isOwner = true;
+        const nameCard = textCardInput.value;
+        const linkCardImage = urlCardInput.value;
+        const card = ({
+            link: linkCardImage,
+            name: nameCard,
+            countLikes: 0,
+            _id: data._id
         });
+        const cards = new Cards(card, cardTemplate, isOwner, likeOwner, defaultApi, openedCardPopup);
+        elements.prepend(cards.createCard());
+        new Popup(popupCard).closePopup();
     }
     handleSubmit(createRequest, evt);
 }
@@ -83,12 +82,11 @@ export function saveCard(evt) {
 
 // сохранение информации в профиле
 export function saveProfile(evt) {
-    function createRequest() {
-        return defaultApi.submitProfileForm(nameSaveInput,aboutSaveInput).then(data => {
-            profileName.textContent = data.name;
-            profileAbout.textContent = data.about;
-            new Popup(popupProfile).closePopup();
-        });
+    async function createRequest() {
+        const data = await defaultApi.submitProfileForm(nameSaveInput, aboutSaveInput);
+        profileName.textContent = data.name;
+        profileAbout.textContent = data.about;
+        new Popup(popupProfile).closePopup();
     }
     handleSubmit(createRequest,evt);
 }
@@ -96,11 +94,10 @@ export function saveProfile(evt) {
 
 // сохранение информации в профиле
 export function saveProfileAvatar(evt) {
-    function createRequest() {
-        return defaultApi.changeAvatar(urlAvatarInput).then(data => {
-            profileAvatar.style.backgroundImage = `url(${data.avatar}`;
-            new Popup(popupAvatarProfile).closePopup();
-        });
+    async function createRequest() {
+        const data = await defaultApi.changeAvatar(urlAvatarInput);
+        profileAvatar.style.backgroundImage = `url(${data.avatar}`;
+        new Popup(popupAvatarProfile).closePopup();
     }
     handleSubmit(createRequest, evt);
 }
