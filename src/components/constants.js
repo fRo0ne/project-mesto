@@ -58,8 +58,6 @@ export const popups = document.querySelectorAll('.popup');
 export const popupProfile = document.querySelector(".popup_edit-profile");
 export const popupCard = document.querySelector(".popup_add-card");
 export const popupImage = document.querySelector(".popup_image");
-export const picturePopup = popupImage.querySelector(".popup__picture");
-export const figurePopup = popupImage.querySelector(".figure__quote");
 export const popupAvatarProfile = document.querySelector(".popup_avatar-edit");
 
 //form popup profile

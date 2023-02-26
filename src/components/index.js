@@ -1,10 +1,12 @@
 import { profileName,profileAbout,nameSaveInput,aboutSaveInput,popupProfile,forms } from "./constants.js";
-import { picturePopup,figurePopup,popupImage,popupCard,popupAvatarProfile,profileAvatar } from "./constants.js";
+import { popupImage,popupCard,popupAvatarProfile,profileAvatar } from "./constants.js";
 import { settingsApi,config,elements,textCardInput,urlCardInput,cardPopupAvatarElement,urlAvatarInput } from './constants.js';
 import { profileContainer,popups,savePopupElement,cardPopupElement,cardTemplate } from './constants.js';
 import { handleSubmit } from './util.js';
 import Api from './Api.js';
 import Popup from './Popup.js';
+import PopupWithForm from './PopupWithForm.js';
+import PopupWithImage from './PopupWithImage.js';
 import UserInfo from './UserInfo.js';
 import FormValidator from './FormValidator.js';
 import Cards from './Cards.js';
@@ -35,14 +37,7 @@ profileContainer.addEventListener('click', function (evt) {
 
 //эвент на попап
 popups.forEach((popup) => {
-  popup.addEventListener('click', (evt) => {
-     if (evt.target.classList.contains('popup__close')) {
-        new Popup(popup).closePopup();
-      }
-    if (evt.target.classList.contains('popup')) {
-        new Popup(popup).closePopup();
-    }
-  });
+    new Popup(popup);
 });
 
 // добавляем контент на страницу
@@ -104,10 +99,7 @@ export function saveProfileAvatar(evt) {
 
 // открываем просмотр фото
 export function openedCardPopup(cardElement) {
-    picturePopup.src = cardElement.target.src;
-    picturePopup.alt = cardElement.target.alt;
-    figurePopup.textContent = cardElement.target.alt;
-    new Popup(popupImage).openPopup();
+    new PopupWithImage(popupImage,cardElement.target)._openImage();
 }
 
 // открываем попап для редактирования профиля
@@ -122,7 +114,7 @@ export function openedCardActionPopup() {
     new Popup(popupCard).openPopup();
 }
 
-// открыаем попап для добавления карточек на страницу
+// открываем попап для добавления карточек на страницу
 export function openedAvatarPopupProfle() {
     new Popup(popupAvatarProfile).openPopup();
 }
@@ -151,7 +143,6 @@ function enableValidation() {
         new FormValidator(config).setEventListeners(el);
     });
 };
-
 
 enableValidation();
 
