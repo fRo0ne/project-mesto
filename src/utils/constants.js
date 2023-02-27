@@ -62,7 +62,7 @@ export const popupAvatarProfile = document.querySelector(".popup_avatar-edit");
 
 //form popup profile
 export const savePopupElement = document.forms.profileAction;
-export const nameSaveInput = savePopupElement.elements.name;
+export const nameSaveInput = savePopupElement.elements.firstName;
 export const aboutSaveInput = savePopupElement.elements.description;
 //form popup card
 export const cardPopupElement = document.forms.cardAction;
@@ -76,6 +76,9 @@ export const urlAvatarInput = cardPopupAvatarElement.elements.url;
 //main content
 export const mainContent = document.querySelector(".content");
 export const profileContainer = mainContent.querySelector(".profile");
+export const profileEditButton = mainContent.querySelector('.profile__edit-button');
+export const profileCardButton = mainContent.querySelector('.profile__add-button');
+export const profileAvatarButton = mainContent.querySelector('.profile__image');
 export const profileName = mainContent.querySelector(".profile__title");
 export const profileAbout = mainContent.querySelector(".profile__quote");
 export const profileAvatar = mainContent.querySelector(".profile__image");

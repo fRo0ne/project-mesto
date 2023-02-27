@@ -1,20 +1,25 @@
 export default class FormValidator {
-    constructor(config) {
+    constructor(config, element) {
         this._config = config;
+        this._element = element;
     }
 
-    setEventListeners(el) {
-        const inputFields = Array.from(el.querySelectorAll(this._config.modalInputField));
-        const button = el.querySelector(this._config.modalButtonSubmit);
+    _ebnableValidation() {
+        this.setEventListeners();
+    }
+
+    setEventListeners() {
+        const inputFields = Array.from(this._element.querySelectorAll(this._config.modalInputField));
+        const button = this._element.querySelector(this._config.modalButtonSubmit);
         this.toggleButtonState(inputFields,button);
-        el.addEventListener('reset', () => {
+        this._element.addEventListener('reset', () => {
             setTimeout(() => {
                 this.toggleButtonState(inputFields,button);
             }, 0);
         });
         inputFields.forEach((inputField) => {
             inputField.addEventListener('input', () => {
-                this.isValid(el,inputField);
+                this.isValid(inputField);
                 this.toggleButtonState(inputFields,button);
             });
         });
@@ -39,26 +44,26 @@ export default class FormValidator {
         });
     };
 
-    isValid(el,inputField) {
+    isValid(inputField) {
         if (inputField.validity.patternMismatch) {
-            this.showInputError(el,inputField.dataset.invalidMessage,inputField);
+            this.showInputError(inputField.dataset.invalidMessage,inputField);
         }
         else if (!inputField.validity.valid) {
-            this.showInputError(el,inputField.validationMessage,inputField);
+            this.showInputError(inputField.validationMessage,inputField);
         } else {
-            this.hideInputError(el,inputField);
+            this.hideInputError(inputField);
         }
     };
 
-    showInputError(el,invalidMessage,inputField) {
-        const errorElement = el.querySelector(`.popup__item-${inputField.name}`);
+    showInputError(invalidMessage,inputField) {
+        const errorElement = this._element.querySelector(`.popup__item-${inputField.name}`);
         inputField.classList.add(this._config.modalInputError);
         errorElement.textContent = invalidMessage;
         errorElement.classList.add(this._config.modalInvalidMessageShow);
     };
 
-    hideInputError(el,inputField) {
-        const errorElement = el.querySelector(`.popup__item-${inputField.name}`);
+    hideInputError(inputField) {
+        const errorElement = this._element.querySelector(`.popup__item-${inputField.name}`);
         inputField.classList.remove(this._config.modalInputError);
         errorElement.classList.remove(this._config.modalInvalidMessageShow);
     };
