@@ -1,4 +1,4 @@
-import { profileName,profileAbout,nameSaveInput,aboutSaveInput,forms } from "../utils/constants.js";
+import { profileName,profileAbout,forms } from "../utils/constants.js";
 import { popupImage,profileAvatar } from "../utils/constants.js";
 import { settingsApi,config,elements,profileEditButton,profileAvatarButton,profileCardButton} from '../utils/constants.js';
 import { cardTemplate } from '../utils/constants.js';
@@ -71,13 +71,13 @@ export function saveProfileAvatar(evt, {url}) {
 
 // открываем просмотр фото
 export function openedCardPopup(cardElement) {
-    new PopupWithImage(popupImage,cardElement.target)._openImage();
+    new PopupWithImage(popupImage)._openImage(cardElement.target);
 }
 
 // открываем попап для редактирования профиля
 export function openedPopupProfile() {
-    nameSaveInput.value = userInfo.getUserInfo().name;
-    aboutSaveInput.value = userInfo.getUserInfo().about;
+    const infoObject = userInfo.getUserInfo();
+    profileAction.setInputValues({firstName: infoObject.name, description: infoObject.about});
     profileAction.openPopup();
 }
 
@@ -110,15 +110,12 @@ function enableModules() {
         switch (el.name) {
             case 'profileAction':
                 profileAction = new PopupWithForm(popup, {form: el, handler: saveProfile, button: profileEditButton, modal: openedPopupProfile});
-                profileAction.setEventListener();
                 break;
             case 'cardAction':
                 cardAction = new PopupWithForm(popup, {form: el, handler: saveCard, button: profileCardButton, modal: openedCardActionPopup});
-                cardAction.setEventListener();
                 break;
             case 'profileAvatarAction':
                 avatarAction = new PopupWithForm(popup, {form: el, handler: saveProfileAvatar, button: profileAvatarButton, modal: openedAvatarPopupProfle});
-                avatarAction.setEventListener();
                 break;
 
         }

@@ -2,6 +2,8 @@ export default class FormValidator {
     constructor(config, element) {
         this._config = config;
         this._element = element;
+        this._inputList = Array.from(this._element.querySelectorAll(this._config.modalInputField));
+        this._submitButton = this._element.querySelector(this._config.modalButtonSubmit);
     }
 
     _ebnableValidation() {
@@ -9,36 +11,34 @@ export default class FormValidator {
     }
 
     setEventListeners() {
-        const inputFields = Array.from(this._element.querySelectorAll(this._config.modalInputField));
-        const button = this._element.querySelector(this._config.modalButtonSubmit);
-        this.toggleButtonState(inputFields,button);
+        this.toggleButtonState();
         this._element.addEventListener('reset', () => {
             setTimeout(() => {
-                this.toggleButtonState(inputFields,button);
+                this.toggleButtonState();
             }, 0);
         });
-        inputFields.forEach((inputField) => {
+        this._inputList.forEach((inputField) => {
             inputField.addEventListener('input', () => {
                 this.isValid(inputField);
-                this.toggleButtonState(inputFields,button);
+                this.toggleButtonState();
             });
         });
     };
 
-    toggleButtonState (inputFields,button) {
-        if (this.hasInvalidInput(inputFields)) {
-            button.classList.remove(this._config.modalButtonSubmitActive);
-            button.classList.add(this._config.modalButtonSubmitDisabled);
-            button.setAttribute('disabled', true);
+    toggleButtonState () {
+        if (this.hasInvalidInput()) {
+            this._submitButton.classList.remove(this._config.modalButtonSubmitActive);
+            this._submitButton.classList.add(this._config.modalButtonSubmitDisabled);
+            this._submitButton.setAttribute('disabled', true);
         } else {
-            button.classList.add(this._config.modalButtonSubmitActive);
-            button.classList.remove(this._config.modalButtonSubmitDisabled);
-            button.removeAttribute('disabled');
+            this._submitButton.classList.add(this._config.modalButtonSubmitActive);
+            this._submitButton.classList.remove(this._config.modalButtonSubmitDisabled);
+            this._submitButton.removeAttribute('disabled');
         }
     };
 
-    hasInvalidInput(inputFields) {
-        return inputFields.some((inputField) => {
+    hasInvalidInput() {
+        return this._inputList.some((inputField) => {
             if (inputField.value.length === 0) return true;
             return inputField.classList.contains(this._config.modalInputError);
         });
