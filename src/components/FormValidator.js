@@ -1,64 +1,69 @@
 export default class FormValidator {
-    constructor(config) {
+    constructor(config, element) {
         this._config = config;
+        this._element = element;
+        this._inputList = Array.from(this._element.querySelectorAll(this._config.modalInputField));
+        this._submitButton = this._element.querySelector(this._config.modalButtonSubmit);
     }
 
-    setEventListeners(el) {
-        const inputFields = Array.from(el.querySelectorAll(this._config.modalInputField));
-        const button = el.querySelector(this._config.modalButtonSubmit);
-        this.toggleButtonState(inputFields,button);
-        el.addEventListener('reset', () => {
+    ebnableValidation() {
+        this.setEventListeners();
+    }
+
+    setEventListeners() {
+        this.toggleButtonState();
+        this._element.addEventListener('reset', () => {
             setTimeout(() => {
-                this.toggleButtonState(inputFields,button);
+                this.toggleButtonState();
             }, 0);
         });
-        inputFields.forEach((inputField) => {
+        this._inputList.forEach((inputField) => {
             inputField.addEventListener('input', () => {
-                this.isValid(el,inputField);
-                this.toggleButtonState(inputFields,button);
+                this.isValid(inputField);
+                this.toggleButtonState();
             });
         });
     };
 
-    toggleButtonState (inputFields,button) {
-        if (this.hasInvalidInput(inputFields)) {
-            button.classList.remove(this._config.modalButtonSubmitActive);
-            button.classList.add(this._config.modalButtonSubmitDisabled);
-            button.setAttribute('disabled', true);
+    toggleButtonState () {
+        if (this.hasInvalidInput()) {
+            this._submitButton.classList.remove(this._config.modalButtonSubmitActive);
+            this._submitButton.classList.add(this._config.modalButtonSubmitDisabled);
+            this._submitButton.setAttribute('disabled', true);
         } else {
-            button.classList.add(this._config.modalButtonSubmitActive);
-            button.classList.remove(this._config.modalButtonSubmitDisabled);
-            button.removeAttribute('disabled');
+            this._submitButton.classList.add(this._config.modalButtonSubmitActive);
+            this._submitButton.classList.remove(this._config.modalButtonSubmitDisabled);
+            this._submitButton.removeAttribute('disabled');
         }
     };
 
-    hasInvalidInput(inputFields) {
-        return inputFields.some((inputField) => {
+    hasInvalidInput() {
+        return this._inputList.some((inputField) => {
             if (inputField.value.length === 0) return true;
             return inputField.classList.contains(this._config.modalInputError);
         });
     };
 
-    isValid(el,inputField) {
+    isValid(inputField) {
         if (inputField.validity.patternMismatch) {
-            this.showInputError(el,inputField.dataset.invalidMessage,inputField);
+            this.showInputError(inputField.dataset.invalidMessage,inputField);
         }
         else if (!inputField.validity.valid) {
-            this.showInputError(el,inputField.validationMessage,inputField);
+            this.showInputError(inputField.validationMessage,inputField);
         } else {
-            this.hideInputError(el,inputField);
+            this.hideInputError(inputField);
         }
     };
 
-    showInputError(el,invalidMessage,inputField) {
-        const errorElement = el.querySelector(`.popup__item-${inputField.name}`);
+    showInputError(invalidMessage,inputField) {
+        const errorElement = this._element.querySelector(`.popup__item-${inputField.name}`);
         inputField.classList.add(this._config.modalInputError);
         errorElement.textContent = invalidMessage;
         errorElement.classList.add(this._config.modalInvalidMessageShow);
     };
 
-    hideInputError(el,inputField) {
-        const errorElement = el.querySelector(`.popup__item-${inputField.name}`);
+    hideInputError(inputField) {
+        const errorElement = this._element.querySelector(`.popup__item-${inputField.name}`);
         inputField.classList.remove(this._config.modalInputError);
         errorElement.classList.remove(this._config.modalInvalidMessageShow);
     };
