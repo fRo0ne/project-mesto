@@ -6,7 +6,7 @@ export default class FormValidator {
         this._submitButton = this._element.querySelector(this._config.modalButtonSubmit);
     }
 
-    _ebnableValidation() {
+    ebnableValidation() {
         this.setEventListeners();
     }
 

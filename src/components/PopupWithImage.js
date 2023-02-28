@@ -7,7 +7,7 @@ export default class PopupWithImage extends Popup {
         this._figurePopup = this._popup.querySelector('.figure__quote');
     }
 
-    _openImage({src, alt}) {
+    openPopup({src, alt}) {
         this._popupPicture.src = src;
         this._popupPicture.alt = alt;
         this._figurePopup.textContent = alt;

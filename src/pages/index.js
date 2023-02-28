@@ -23,6 +23,7 @@ let userInfo;
 let section;
 
 export const defaultApi = new Api( settingsApi );
+export const popupWithImage = new PopupWithImage(popupImage);
 
 // добавляем контент на страницу
 export function renderer(card) {
@@ -71,7 +72,7 @@ export function saveProfileAvatar(evt, {url}) {
 
 // открываем просмотр фото
 export function openedCardPopup(cardElement) {
-    new PopupWithImage(popupImage)._openImage(cardElement.target);
+    popupWithImage.openPopup(cardElement.target);
 }
 
 // открываем попап для редактирования профиля
@@ -119,7 +120,7 @@ function enableModules() {
                 break;
 
         }
-        new FormValidator(config,el)._ebnableValidation();
+        new FormValidator(config,el).ebnableValidation();
     });
 };
 
